@@ -143,9 +143,6 @@
   .div-upload-ico { font-size: 24px; color: var(--muted); transition: color .2s; }
   .div-upload:hover .div-upload-ico, .div-upload.ok .div-upload-ico { color: var(--accent); }
   .div-upload-txt { font-size: 14px; color: var(--muted); }
-  .div-rates { font-size: 12px; color: var(--muted); margin-bottom: 16px; display: flex; align-items: center; gap: 6px; }
-  .div-rates-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--muted); flex-shrink: 0; }
-  .div-rates-dot.ok { background: var(--green); }
   .div-error { display: none; font-size: 13px; color: var(--red); background: rgba(220,38,38,0.08); border: 1px solid rgba(220,38,38,0.2); border-radius: 8px; padding: 12px 16px; margin-bottom: 16px; }
 
   /* Dividend table specifics */
@@ -187,7 +184,7 @@
 <div class="app">
   <nav class="sidebar">
     <div class="sidebar-logo">
-      <h1>Pitinvest<br>App</h1>
+      <h1>Pitinvest<br>App <script>document.write(new Date().getFullYear())</script></h1>
       <p id="sideWeek">Actualizado en tiempo real</p>
     </div>
     <div class="nav-item active" onclick="goTo('cartera')" id="nav-cartera"><span class="nav-icon">📊</span> Mi Cartera</div>
@@ -202,7 +199,7 @@
   <main class="main">
     <!-- ═══ CARTERA ═══ -->
     <div class="page active" id="page-cartera">
-      <h2 class="app-title-large">Pitinvest App</h2>
+      <h2 class="app-title-large">Pitinvest App <script>document.write(new Date().getFullYear())</script></h2>
       <div class="stat-card-minimal" style="margin-bottom:20px">
         <span class="stat-number" id="statTotal">—</span>
         <span class="stat-text">Empresas Analizadas</span>
@@ -276,28 +273,48 @@
 
     <!-- ═══ DIVIDENDOS ═══ -->
     <div class="page" id="page-dividendos">
-      <div class="page-header"><h2 class="app-title-large" style="margin-bottom:0;">Dividendos cobrados</h2></div>
+      <div class="page-header" style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:16px;">
+        <h2 class="app-title-large" style="margin-bottom:0;">Dividendos cobrados</h2>
+      </div>
 
       <div class="div-upload" id="divUpz">
         <i class="ti ti-cloud-upload div-upload-ico"></i>
         <span class="div-upload-txt" id="divUpzTxt">Arrastra tu CSV o XML de Interactive Brokers aquí, o haz clic para seleccionar</span>
         <input type="file" id="divFile" accept=".csv,.xml" style="display:none">
       </div>
-      <div class="div-rates"><span class="div-rates-dot" id="divRDot"></span><span id="divRTxt">Cargando tipos de cambio...</span></div>
       <div class="div-error" id="divError"></div>
 
       <div id="divTableCard" class="card" style="display:none;">
-        <div class="card-label">Último archivo cargado<button class="btn-ghost" style="padding:2px 8px;font-size:11px;border-radius:4px;" onclick="borrarArchivo()">Limpiar</button></div>
+        <div class="card-label">
+          <div style="display:flex; align-items:center; gap:16px;">
+            <div class="news-tabs" style="margin:0; padding:0; border:none; display:flex; align-items:center; gap:8px;">
+              <button class="btn-ghost active" id="btnDivFilterYear" onclick="setDivFilter('year')">Año en curso</button>
+              <select class="btn-ghost" id="divMonthSelect" onchange="setDivFilter('month')" style="display:none; outline:none; cursor:pointer; padding:6px 10px;"></select>
+              <button class="btn-ghost" id="btnDivFilterNew" onclick="setDivFilter('new')">Última actualización</button>
+              <span style="font-size:11px; color:var(--muted); margin-left: 12px; display:inline-block; border-left: 1px solid var(--border); padding-left: 12px;">Última subida: <strong id="divLastUploadDate" style="color:var(--text);">—</strong></span>
+            </div>
+          </div>
+          <button class="btn-ghost" style="padding:2px 8px;font-size:11px;border-radius:4px;" onclick="borrarArchivo()">Limpiar</button>
+        </div>
         <div style="overflow-x:auto;">
           <table class="company-table div-table" id="divTable"><thead><tr id="divTHead"></tr></thead><tbody id="divTBody"></tbody></table>
         </div>
         <p style="font-size:11px;color:var(--muted);margin-top:12px;">* Conversión: neto en divisa original antes de convertir a EUR. USD se mantiene en $.</p>
       </div>
 
-      <div class="div-section-label" id="divHistLabel" style="display:none">Historial acumulado<button class="btn-ghost" onclick="borrarDivHistorial()" style="padding:4px 10px;font-size:11px;margin-left:auto;">🗑 Borrar historial</button></div>
+      <div class="div-section-label" id="divHistLabel" style="display:none">
+        Historial acumulado
+        <div class="news-tabs" style="margin:0 0 0 16px; padding:0; border:none; display:flex; align-items:center; gap:8px;">
+          <button class="btn-ghost active" id="btnHistAction" onclick="setHistView('action')">Por acciones</button>
+          <button class="btn-ghost" id="btnHistMonth" onclick="setHistView('month')">Por meses</button>
+        </div>
+      </div>
       <div id="divHistCard" class="card" style="display:none;">
-        <div style="overflow-x:auto;">
+        <div id="histViewAction" style="overflow-x:auto;">
           <table class="company-table div-table" id="divHTable"><thead><tr id="divHHead"></tr></thead><tbody id="divHBody"></tbody></table>
+        </div>
+        <div id="histViewMonth" style="overflow-x:auto; display:none;">
+          <table class="company-table div-table" id="divHMonthTable"><tbody id="divHMonthBody"></tbody></table>
         </div>
       </div>
     </div>
@@ -306,7 +323,7 @@
 
 <script>
 // ═══════════════════════════════════════════════════════════════
-//  CONFIGURACIÓN (sin cambios respecto al original)
+//  CONFIGURACIÓN
 // ═══════════════════════════════════════════════════════════════
 const SHEET_CSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSXSofvMaT7bYXduO3ywx6Pg5q-cZccTc2GcitfKbv9pvqaDIW_0xR2RHamWwt1h6KVxpf5Vm0EwLe-/pub?output=csv';
 const DAYS_ES = ['Lunes','Martes','Miércoles','Jueves','Viernes'];
@@ -326,7 +343,13 @@ let divHistorial = [];
 let divOrd = {col:'fecha', dir:'asc'};
 let divHistOrd = {col:'neto', dir:'desc'};
 let divExpanded = {};
-let cambios = {CAD:1.56, AUD:1.76, GBP:0.84, SEK:10.8};
+let histMonthExpanded = {};
+let cambios = {CAD:1.56, AUD:1.76, GBP:0.84, SEK:10.8, USD:1.08};
+
+let currentDivFilter = 'year';
+let currentDivMonth = '';
+let prevUploadTs = null;
+let currentHistView = 'action';
 
 // ═══════════════════════════════════════════════════════════════
 //  TEMA
@@ -385,7 +408,7 @@ function goTo(page) {
 window.addEventListener('load', init);
 
 // ═══════════════════════════════════════════════════════════════
-//  CARTERA (sin sectores)
+//  CARTERA
 // ═══════════════════════════════════════════════════════════════
 function parseCSVLine(line) { const cols = []; let cur = '', inQ = false; for(const ch of line) { if(ch === '"') inQ = !inQ; else if(ch === ',' && !inQ) { cols.push(cur.trim()); cur = ''; } else cur += ch; } cols.push(cur.trim()); return cols; }
 
@@ -426,10 +449,17 @@ async function init() {
     if(e.name !== 'AbortError') el.textContent = '⚠️ Error';
   }
 
-  // Load div history
+  // Load div history & update date
   try { const h = localStorage.getItem('div_historial_v2'); if(h) divHistorial = JSON.parse(h); } catch(e) {}
+  
+  const savedTs = localStorage.getItem('div_last_upload_v2');
+  if(savedTs) {
+      prevUploadTs = parseInt(savedTs, 10);
+      const dt = new Date(prevUploadTs);
+      document.getElementById('divLastUploadDate').textContent = `${String(dt.getDate()).padStart(2,'0')}/${String(dt.getMonth()+1).padStart(2,'0')}/${dt.getFullYear()}`;
+  }
+  
   renderDivHist();
-  fetchDivRates();
 }
 
 function sortTable(col) {
@@ -457,7 +487,7 @@ function renderCarteraTable() {
 function toggleWeek(w) { document.getElementById('toggle'+w).classList.toggle('open'); document.getElementById('body'+w).classList.toggle('open'); }
 
 // ═══════════════════════════════════════════════════════════════
-//  EARNINGS (NASDAQ) — sin cambios
+//  EARNINGS
 // ═══════════════════════════════════════════════════════════════
 async function fetchEarnings(isBackground = false, signal = activeRequests.signal) {
   if(!companies.length) return;
@@ -510,7 +540,7 @@ function renderWeek(which, items, weekDates) {
 }
 
 // ═══════════════════════════════════════════════════════════════
-//  INSIDERS (NASDAQ) — sin cambios
+//  INSIDERS
 // ═══════════════════════════════════════════════════════════════
 async function fetchInsiders(isBackground = false, signal = activeRequests.signal) {
   if(!companies.length) return;
@@ -573,7 +603,7 @@ async function fetchInsiders(isBackground = false, signal = activeRequests.signa
 }
 
 // ═══════════════════════════════════════════════════════════════
-//  EMPRESA DETAILS — sin cambios
+//  EMPRESA DETAILS
 // ═══════════════════════════════════════════════════════════════
 function abrirEmpresa(ticker) {
   const comp = companies.find(c => c.yahooTicker === ticker); if(!comp) return;
@@ -649,7 +679,7 @@ async function fetchEmpresaNews(compName, ticker, source) {
 }
 
 // ═══════════════════════════════════════════════════════════════
-//  DIVIDENDOS — integrado usando companies[]
+//  DIVIDENDOS
 // ═══════════════════════════════════════════════════════════════
 
 // --- Helpers dividendos ---
@@ -664,6 +694,10 @@ function divNetStr(e,u) {
   if(e>0) return `<span style="color:var(--green)">€${e.toFixed(2)}</span>`;
   if(u>0) return `<span style="color:var(--accent)">$${u.toFixed(2)}</span>`;
   return '<span style="color:var(--muted)">—</span>';
+}
+function divUnifiedTotalStr(e, u) {
+  const total = e + (u / cambios.USD);
+  return `<span style="color:var(--green)">€${total.toFixed(2)}</span>`;
 }
 function divSortIco(ord,col) { if(ord.col!==col) return '<span class="div-sort-ico">⇅</span>'; return `<span class="div-sort-ico">${ord.dir==='asc'?'▲':'▼'}</span>`; }
 function divSort(arr,col,dir,fn) { return arr.slice().sort((a,b) => { let va=fn(a,col),vb=fn(b,col); if(va==null)return 1;if(vb==null)return -1; return va<vb?(dir==='asc'?-1:1):va>vb?(dir==='asc'?1:-1):0; }); }
@@ -692,13 +726,66 @@ function divBuild() {
   });
 }
 
+function populateMonthSelect(allData) {
+  const select = document.getElementById('divMonthSelect');
+  const months = new Set();
+  allData.forEach(d => {
+    const dt = divToDate(d.fecha);
+    if (dt.getTime() > 0) {
+        months.add(`${dt.getFullYear()}-${String(dt.getMonth()+1).padStart(2,'0')}`);
+    }
+  });
+  const sortedMonths = Array.from(months).sort((a,b) => b.localeCompare(a));
+  const monthNames = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+  
+  let html = '<option value="">Seleccionar Mes...</option>';
+  sortedMonths.forEach(m => {
+    const [yyyy, mm] = m.split('-');
+    html += `<option value="${m}">${monthNames[parseInt(mm)-1]} ${yyyy}</option>`;
+  });
+  select.innerHTML = html;
+  select.style.display = sortedMonths.length > 0 ? 'inline-block' : 'none';
+}
+
+function setDivFilter(f) {
+  currentDivFilter = f;
+  document.getElementById('btnDivFilterYear').classList.toggle('active', f === 'year');
+  document.getElementById('btnDivFilterNew').classList.toggle('active', f === 'new');
+  const sel = document.getElementById('divMonthSelect');
+  
+  if (f !== 'month') {
+    sel.value = '';
+    currentDivMonth = '';
+  } else {
+    currentDivMonth = sel.value;
+  }
+  renderDivTable();
+}
+
 // --- Render dividends table ---
 function divValFn(d,col) { if(col==='ticker')return d.ticker; if(col==='fecha')return divToDate(d.fecha).getTime(); if(col==='cur')return d.cur; if(col==='bruto')return d.bruto; if(col==='tax')return d.tax; if(col==='conv')return d.netoOrig; if(col==='neto')return d.netoFinal; return 0; }
 function divClickSort(col) { divOrd.dir=(divOrd.col===col&&divOrd.dir==='asc')?'desc':'asc'; divOrd.col=col; renderDivTable(); }
 
 function renderDivTable() {
   if(!divFilas.length) return;
-  const all = divBuild();
+  
+  let all = divBuild();
+  const currYear = new Date().getFullYear();
+  
+  if (currentDivFilter === 'year') {
+      all = all.filter(d => divToDate(d.fecha).getFullYear() === currYear);
+  } else if (currentDivFilter === 'month' && currentDivMonth) {
+      all = all.filter(d => {
+          const dt = divToDate(d.fecha);
+          const mKey = `${dt.getFullYear()}-${String(dt.getMonth()+1).padStart(2,'0')}`;
+          return mKey === currentDivMonth;
+      });
+  } else if (currentDivFilter === 'new') {
+      if (prevUploadTs) {
+          all = all.filter(d => divToDate(d.fecha).getTime() > prevUploadTs);
+      }
+  }
+
   const sorted = divSort(all, divOrd.col, divOrd.dir, divValFn);
   const order=[], byT={};
   sorted.forEach(d => { if(!byT[d.ticker]){byT[d.ticker]=[];order.push(d.ticker);} byT[d.ticker].push(d); });
@@ -708,7 +795,7 @@ function renderDivTable() {
   document.getElementById('divTHead').innerHTML = cols.map(c => `<th class="${c.r?'R':'L'}" onclick="divClickSort('${c.k}')" style="cursor:pointer">${c.l}${divSortIco(divOrd,c.k)}</th>`).join('');
 
   const tbody = document.getElementById('divTBody');
-  if(!sorted.length) { tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:24px;color:var(--muted)">No hay dividendos de tu cartera en este archivo</td></tr>'; return; }
+  if(!sorted.length) { tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:24px;color:var(--muted)">No hay dividendos en este filtro</td></tr>`; return; }
 
   let html = '';
   order.forEach(ticker => {
@@ -732,11 +819,11 @@ function renderDivTable() {
   // Total
   let tE=0,tU=0,tB=0,tT=0;
   sorted.forEach(d=>{if(d.sym==='€')tE+=d.netoFinal;else tU+=d.netoFinal;tB+=d.bruto;tT+=d.tax;});
-  html += `<tr class="div-total"><td colspan="3" class="L" style="font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)">Total</td><td class="R div-mono">${tB.toFixed(2)}</td><td class="R div-mono" style="color:var(--red)">${tT.toFixed(2)}</td><td class="R div-mono" style="color:var(--muted)">—</td><td class="R div-mono">${divNetStr(tE,tU)}</td></tr>`;
+  html += `<tr class="div-total"><td colspan="3" class="L" style="font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)">Total</td><td class="R div-mono">${tB.toFixed(2)}</td><td class="R div-mono" style="color:var(--red)">${tT.toFixed(2)}</td><td class="R div-mono" style="color:var(--muted)">—</td><td class="R div-mono">${divUnifiedTotalStr(tE,tU)}</td></tr>`;
   tbody.innerHTML = html;
 
   // Acumular historial
-  sorted.forEach(d => { if(!divHistorial.some(r=>r.ticker===d.ticker&&r.fecha===d.fecha)) divHistorial.push({ticker:d.ticker,fecha:d.fecha,neto:d.netoFinal,sym:d.sym}); });
+  all.forEach(d => { if(!divHistorial.some(r=>r.ticker===d.ticker&&r.fecha===d.fecha)) divHistorial.push({ticker:d.ticker,fecha:d.fecha,neto:d.netoFinal,sym:d.sym}); });
   try { localStorage.setItem('div_historial_v2', JSON.stringify(divHistorial)); } catch(e) {}
   renderDivHist();
 
@@ -750,6 +837,15 @@ function borrarArchivo() { divFilas=[]; document.getElementById('divTableCard').
 // --- Render history ---
 function divHistValFn(r,col) { if(col==='ticker')return r.ticker; if(col==='nombre')return r.nombre||''; if(col==='neto')return(r.eur||0)+(r.usd||0); if(col==='cobros')return r.cobros||0; if(col==='ultima')return r.ultimaTs||0; return 0; }
 function divHistClickSort(col) { divHistOrd.dir=(divHistOrd.col===col&&divHistOrd.dir==='asc')?'desc':'asc'; divHistOrd.col=col; renderDivHist(); }
+
+function setHistView(v) {
+  currentHistView = v;
+  document.getElementById('btnHistAction').classList.toggle('active', v==='action');
+  document.getElementById('btnHistMonth').classList.toggle('active', v==='month');
+  document.getElementById('histViewAction').style.display = v==='action' ? 'block' : 'none';
+  document.getElementById('histViewMonth').style.display = v==='month' ? 'block' : 'none';
+  if(v==='month') renderHistMonth();
+}
 
 function renderDivHist() {
   const mapa = {};
@@ -770,31 +866,68 @@ function renderDivHist() {
   document.getElementById('divHistCard').style.display='block';
 
   const pagan=todos.filter(r=>r.eur>0||r.usd>0);
-  const noPagan=todos.filter(r=>r.eur===0&&r.usd===0);
   const sp=divSort(pagan,divHistOrd.col,divHistOrd.dir,divHistValFn);
-  const sn=divSort(noPagan,'ticker','asc',divHistValFn);
 
   const cols=[{k:'ticker',l:'Ticker'},{k:'nombre',l:'Nombre'},{k:'neto',l:'Total cobrado',r:1},{k:'cobros',l:'Cobros',r:1},{k:'ultima',l:'Última fecha',r:0}];
   document.getElementById('divHHead').innerHTML = cols.map(c => `<th class="${c.r?'R':'L'}" onclick="divHistClickSort('${c.k}')" style="cursor:pointer">${c.l}${divSortIco(divHistOrd,c.k)}</th>`).join('');
 
-  function fila(r,gris) {
+  function fila(r) {
     const nm=r.nombre?`<span style="max-width:220px;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${r.nombre}</span>`:'<span style="color:var(--muted)">—</span>';
-    return `<tr class="${gris?'div-dim':''}"><td class="L" style="font-weight:600;white-space:nowrap">${r.ticker}</td><td class="L" style="font-size:12px;color:var(--muted)">${nm}</td><td class="R div-mono" style="white-space:nowrap">${divNetStr(r.eur,r.usd)}</td><td class="R div-mono" style="color:var(--muted)">${r.cobros}</td><td class="L div-mono" style="color:var(--muted);white-space:nowrap">${r.ultima||'—'}</td></tr>`;
+    return `<tr><td class="L" style="font-weight:600;white-space:nowrap">${r.ticker}</td><td class="L" style="font-size:12px;color:var(--muted)">${nm}</td><td class="R div-mono" style="white-space:nowrap">${divNetStr(r.eur,r.usd)}</td><td class="R div-mono" style="color:var(--muted)">${r.cobros}</td><td class="L div-mono" style="color:var(--muted);white-space:nowrap">${r.ultima||'—'}</td></tr>`;
   }
   // Total row
   let hTotEUR=0, hTotUSD=0, hTotCobros=0;
-  todos.forEach(r => { hTotEUR+=r.eur; hTotUSD+=r.usd; hTotCobros+=r.cobros; });
-  const totalRow = `<tr class="div-total"><td colspan="2" class="L" style="font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)">Total</td><td class="R div-mono">${divNetStr(hTotEUR,hTotUSD)}</td><td class="R div-mono" style="color:var(--muted)">${hTotCobros}</td><td></td></tr>`;
-  document.getElementById('divHBody').innerHTML = sp.map(r=>fila(r,false)).join('') + totalRow + sn.map(r=>fila(r,true)).join('');
+  sp.forEach(r => { hTotEUR+=r.eur; hTotUSD+=r.usd; hTotCobros+=r.cobros; });
+  const totalRow = `<tr class="div-total"><td colspan="2" class="L" style="font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)">Total</td><td class="R div-mono">${divUnifiedTotalStr(hTotEUR,hTotUSD)}</td><td class="R div-mono" style="color:var(--muted)">${hTotCobros}</td><td></td></tr>`;
+  document.getElementById('divHBody').innerHTML = sp.map(r=>fila(r)).join('') + totalRow;
 
+  if (currentHistView === 'month') renderHistMonth();
   setTimeout(() => initResizeHandles(document.getElementById('divHTable')), 100);
 }
 
-async function borrarDivHistorial() {
-  if(!confirm('¿Borrar todo el historial de dividendos acumulado?')) return;
-  divHistorial = [];
-  try { localStorage.setItem('div_historial_v2', '[]'); } catch(e) {}
-  renderDivHist();
+function divToggleHistMonth(k) { histMonthExpanded[k] = !histMonthExpanded[k]; renderHistMonth(); }
+
+function renderHistMonth() {
+  const months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+  const groups = {};
+
+  divHistorial.forEach(r => {
+    const d = divToDate(r.fecha);
+    const k = `${d.getFullYear()}-${String(d.getMonth()).padStart(2,'0')}`;
+    if(!groups[k]) groups[k] = { label: `${months[d.getMonth()]} ${d.getFullYear()}`, eur:0, usd:0, items:[] };
+    if(r.sym === '€') groups[k].eur += r.neto; else groups[k].usd += r.neto;
+    groups[k].items.push(r);
+  });
+
+  const keys = Object.keys(groups).sort((a,b) => b.localeCompare(a));
+  let html = '';
+  keys.forEach(k => {
+    const g = groups[k];
+    const exp = histMonthExpanded[k];
+    g.items.sort((a,b) => divToDate(b.fecha).getTime() - divToDate(a.fecha).getTime());
+
+    html += `<tr style="cursor:pointer;background:${exp?'var(--surface2)':'transparent'}" onclick="divToggleHistMonth('${k}')">
+      <td class="L" style="font-weight:600;">${g.label} <span class="div-multi">${g.items.length}</span></td>
+      <td class="R div-mono">${divUnifiedTotalStr(g.eur, g.usd)}</td>
+    </tr>`;
+
+    if(exp) {
+      g.items.forEach(x => {
+        html += `<tr class="div-sub">
+          <td class="L" style="padding-left:24px;">
+            <div style="font-weight:600; color:var(--text);">${x.ticker}</div>
+            <div class="div-mono" style="color:var(--muted);">${x.fecha}</div>
+          </td>
+          <td class="R div-mono" style="color:var(--green)">${x.sym}${x.neto.toFixed(2)}</td>
+        </tr>`;
+      });
+    }
+  });
+  
+  if (!keys.length) {
+    html = `<tr><td colspan="2" style="text-align:center;padding:24px;color:var(--muted)">No hay historial de dividendos.</td></tr>`;
+  }
+  document.getElementById('divHMonthBody').innerHTML = html;
 }
 
 // --- Upload IB file ---
@@ -816,24 +949,16 @@ function divLoadFile(file) {
       if(!divFilas.length) throw new Error('No se encontraron transacciones');
       document.getElementById('divUpzTxt').innerHTML = `<strong>${file.name}</strong> · <span style="color:var(--green)">${divFilas.length} transacciones leídas</span>`;
       divUpz.classList.add('ok'); err.style.display = 'none';
+      
+      // Update upload date in LS (do not update prevUploadTs so 'Última actualización' filter works this session)
+      localStorage.setItem('div_last_upload_v2', Date.now().toString());
+      
+      // Populate month filter dropdown before rendering
+      populateMonthSelect(divBuild());
       renderDivTable();
     } catch(ex) { err.textContent = 'Error: ' + ex.message; err.style.display = 'block'; }
   };
   reader.readAsText(file);
-}
-
-// --- Exchange rates ---
-async function fetchDivRates() {
-  try {
-    const res = await fetch('https://open.er-api.com/v6/latest/EUR');
-    const data = await res.json();
-    if(data.rates) {
-      ['CAD','AUD','GBP','SEK'].forEach(c => { if(data.rates[c]) cambios[c] = data.rates[c]; });
-      const d = new Date();
-      document.getElementById('divRTxt').textContent = `Tipos ${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()} — 1€ = ${cambios.CAD.toFixed(4)} CAD · ${cambios.AUD.toFixed(4)} AUD · ${cambios.GBP.toFixed(4)} GBP`;
-      document.getElementById('divRDot').classList.add('ok');
-    }
-  } catch(e) { document.getElementById('divRTxt').textContent = 'Tipos de referencia (sin conexión)'; }
 }
 
 // --- Resizable columns ---
