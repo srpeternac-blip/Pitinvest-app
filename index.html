@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pitinvest App</title>
+<title>Pitinvest App 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -50,11 +50,14 @@
   .card-label { font-size: 12px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; }
   .btn { border: none; border-radius: 8px; padding: 12px 24px; font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer; transition: all .2s; }
   .btn:hover:not(:disabled) { transform: translateY(-1px); }
-  .btn:disabled { opacity: .6; cursor: not-allowed; }
   .btn-primary { background: var(--accent); color: white; box-shadow: 0 2px 4px rgba(2,132,199,0.2); }
-  .btn-ghost { background: var(--surface2); color: var(--text); border: 1px solid var(--border); padding: 8px 14px; font-size: 12px; transition: all 0.2s; cursor: pointer; }
-  .btn-ghost.active { background: var(--accent); color: white; border-color: var(--accent); }
-  .btn-ghost:hover { border-color: var(--accent); }
+  
+  /* Tabs Unificados (Mismo color) */
+  .btn-tab { background: var(--surface2); color: var(--muted); border: 1px solid var(--border); padding: 8px 14px; font-size: 12px; transition: all 0.2s; cursor: pointer; border-radius: 8px; font-weight: 600; font-family: inherit; }
+  .btn-tab:hover { color: var(--text); border-color: var(--muted); }
+  .btn-tab.active { background: #e2e8f0; color: var(--text); border-color: #cbd5e1; }
+  body.dark-theme .btn-tab.active { background: #475569; border-color: #64748b; }
+
   .stat-card-minimal { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; display: flex; align-items: baseline; gap: 12px; box-shadow: var(--shadow); }
   .stat-number { font-size: 32px; font-weight: 800; color: var(--accent); line-height: 1; }
   .stat-text { font-size: 14px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
@@ -65,26 +68,13 @@
   .company-table th:hover { color: var(--text); }
   .company-table td { padding: 12px 16px; font-size: 13px; border-bottom: 1px solid var(--border); vertical-align: middle; }
   .company-table tr:last-child td { border-bottom: none; }
-  .td-ticker { font-weight: 600; }
-  .td-name { color: var(--text); font-weight: 500; }
-  .ticker-link { color: var(--accent); text-decoration: none; transition: opacity 0.2s; cursor: pointer; font-size: 14px; }
+  .ticker-link { color: var(--accent); text-decoration: none; cursor: pointer; font-size: 14px; font-weight: 600; }
   .ticker-link:hover { text-decoration: underline; }
 
   /* Alerts */
   .alert-badge { display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; border-radius: 4px; font-size: 10px; font-weight: 800; margin-left: 4px; cursor: default; }
   .alert-earn { background: var(--bmo); color: #fff; }
   .alert-ins { background: var(--amc); color: #fff; }
-
-  /* Details */
-  .det-header { padding-bottom: 16px; border-bottom: 1px solid var(--border); margin-bottom: 16px; position: relative; }
-  .news-tabs { display: flex; gap: 8px; margin-bottom: 16px; overflow-x: auto; padding-bottom: 4px; }
-  .news-list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 12px; }
-  .news-list li { border-bottom: 1px solid var(--border); padding-bottom: 12px; }
-  .news-list li:last-child { border-bottom: none; }
-  .news-date { font-size: 11px; color: var(--muted); margin-bottom: 4px; font-weight: 500; }
-  .news-title { color: var(--text); text-decoration: none; font-weight: 500; font-size: 13px; transition: color 0.2s; line-height: 1.4; display: block; }
-  .news-title:hover { color: var(--accent); }
-  .row-link:hover { cursor: pointer; background: var(--surface2); }
 
   /* Layout */
   .main-view-layout { display: flex; gap: 24px; align-items: flex-start; }
@@ -104,8 +94,7 @@
   .week-count.empty { background: var(--border); color: var(--muted); }
   .week-body { background: var(--surface); border: 1px solid var(--accent); border-top: none; border-radius: 0 0 12px 12px; overflow: hidden; display: none; }
   .week-body.open { display: block; }
-  .day-block { border-bottom: 1px solid var(--border); }
-  .day-row { display: flex; align-items: flex-start; padding: 20px 24px; gap: 24px; min-height: 80px; }
+  .day-row { display: flex; align-items: flex-start; padding: 20px 24px; gap: 24px; border-bottom: 1px solid var(--border); }
   .day-name-col { width: 120px; flex-shrink: 0; }
   .day-name-txt { font-size: 14px; font-weight: 700; display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
   .today-dot { background: var(--accent); color: white; font-size: 10px; font-weight: 700; border-radius: 4px; padding: 2px 6px; }
@@ -126,12 +115,11 @@
   .insider-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 16px; box-shadow: var(--shadow); }
   .insider-card-header { display: flex; align-items: center; gap: 16px; padding: 16px 24px; background: var(--surface2); border-bottom: 1px solid var(--border); }
   .ins-ticker { font-size: 16px; font-weight: 700; color: var(--accent); }
-  .ins-company { font-size: 15px; font-weight: 500; }
   .ins-badge { margin-left: auto; font-size: 12px; font-weight: 600; border-radius: 20px; padding: 4px 12px; background: rgba(5,150,105,0.15); color: var(--dmh); }
   .ins-table { width: 100%; border-collapse: collapse; }
   .ins-table th { font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; padding: 12px 16px; text-align: left; background: var(--surface); border-bottom: 1px solid var(--border); }
   .ins-table td { padding: 12px 16px; font-size: 13px; border-bottom: 1px solid var(--border); }
-  .ins-table tr:hover td { background: var(--surface2); }
+  .ins-table tr:hover td { background: var(--surface2); cursor: pointer; }
   .ins-mono { font-family: monospace; font-size: 13px; color: var(--muted); }
   .square-ind { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; }
   .sq-red { background: var(--red); } .sq-green { background: var(--green); }
@@ -150,41 +138,33 @@
   .div-table td { padding: 10px 16px; font-size: 13px; }
   .div-table .R { text-align: right; }
   .div-table .L { text-align: left; }
-  .div-mono { font-variant-numeric: tabular-nums; font-family: 'SF Mono', 'Fira Code', monospace; font-size: 12px; }
+  .div-mono { font-variant-numeric: tabular-nums; font-family: 'SF Mono', 'Fira Code', monospace; font-size: 13px; }
   tr.div-sub { background: var(--surface2); }
   tr.div-sub td { padding: 6px 16px; font-size: 12px; color: var(--muted); }
   tr.div-sub:hover { background: var(--surface2) !important; }
   tr.div-total { background: var(--surface2); border-top: 2px solid var(--border) !important; }
   tr.div-total td { font-weight: 700; padding: 12px 16px; }
-  tr.div-dim td { opacity: 0.3; }
   .div-cur { font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px; }
   .dUSD { background: rgba(2,132,199,0.1); color: var(--accent); }
   .dEUR { background: rgba(124,58,237,0.1); color: var(--amc); }
-  .dCAD { background: rgba(217,119,6,0.1); color: var(--bmo); }
-  .dAUD { background: rgba(22,163,74,0.1); color: var(--green); }
-  .dGBP { background: rgba(5,150,105,0.1); color: var(--dmh); }
-  .dSEK { background: rgba(220,38,38,0.1); color: var(--red); }
   .dX { background: var(--surface2); color: var(--muted); }
   .div-multi { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 20px; background: rgba(217,119,6,0.12); color: var(--bmo); margin-left: 6px; }
-  .div-expand { background: none; border: none; cursor: pointer; color: var(--muted); font-size: 11px; transition: transform .15s; vertical-align: middle; display: inline-flex; }
-  .div-expand.open { transform: rotate(90deg); }
   .div-name-sub { font-size: 11px; color: var(--muted); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px; }
   .div-sort-ico { margin-left: 3px; font-size: 9px; opacity: 0.6; }
 
-  /* Resize handles */
-  .resize-handle { position: absolute; right: 0; top: 0; bottom: 0; width: 5px; cursor: col-resize; background: transparent; z-index: 2; }
-  .resize-handle:hover, .resize-handle.active { background: var(--accent); opacity: 0.4; }
-
-  /* Section divider for history */
   .div-section-label { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); margin: 32px 0 16px; display: flex; align-items: center; gap: 10px; }
   .div-section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  
+  /* Tabla compacta para meses */
+  .table-compact { width: auto; min-width: 300px; border-collapse: collapse; }
+  .table-compact td { padding: 12px 16px; font-size: 13px; border-bottom: 1px solid var(--border); }
 </style>
 </head>
 <body>
 <div class="app">
   <nav class="sidebar">
     <div class="sidebar-logo">
-      <h1>Pitinvest<br>App <script>document.write(new Date().getFullYear())</script></h1>
+      <h1 id="sidebarTitle">Pitinvest App 2026</h1>
       <p id="sideWeek">Actualizado en tiempo real</p>
     </div>
     <div class="nav-item active" onclick="goTo('cartera')" id="nav-cartera"><span class="nav-icon">📊</span> Mi Cartera</div>
@@ -199,7 +179,7 @@
   <main class="main">
     <!-- ═══ CARTERA ═══ -->
     <div class="page active" id="page-cartera">
-      <h2 class="app-title-large">Pitinvest App <script>document.write(new Date().getFullYear())</script></h2>
+      <h2 class="app-title-large" id="mainTitle">Pitinvest App 2026</h2>
       <div class="stat-card-minimal" style="margin-bottom:20px">
         <span class="stat-number" id="statTotal">—</span>
         <span class="stat-text">Empresas Analizadas</span>
@@ -219,30 +199,30 @@
     <!-- ═══ EMPRESA DETAIL ═══ -->
     <div class="page" id="page-empresa">
       <div class="page-header" style="display:flex;flex-direction:column;align-items:flex-start;">
-        <button class="btn btn-ghost" onclick="goTo('cartera')" style="margin-bottom:20px;">← Volver a Mi Cartera</button>
+        <button class="btn-tab" onclick="goTo('cartera')" style="margin-bottom:20px;">← Volver a Mi Cartera</button>
         <h2 id="detNombre" class="app-title-large" style="margin-bottom:4px;">Empresa</h2>
         <p id="detTicker" style="font-family:monospace;color:var(--accent);font-weight:700;font-size:18px;margin-bottom:16px;">TICKER</p>
-        <a id="btnInvesting" href="#" target="_blank" class="btn btn-primary" style="padding:8px 16px;font-size:13px;">Ver en Investing Pro ↗</a>
+        <a id="btnInvesting" href="#" target="_blank" class="btn btn-primary" style="padding:8px 16px;font-size:13px; text-decoration:none;">Ver en Investing Pro ↗</a>
       </div>
       <div class="main-view-layout">
         <div class="main-view-left" style="flex:1;">
           <div class="card" style="margin-bottom:20px;">
-            <div class="card-label">Resultados (Earnings)<button class="btn-ghost" style="padding:2px 8px;font-size:11px;border-radius:4px;" onclick="fetchEmpresaEarnings(document.getElementById('detTicker').textContent, true)">↻ Actualizar</button></div>
+            <div class="card-label">Resultados (Earnings)<button class="btn-tab" style="padding:4px 8px;font-size:11px;" onclick="fetchEmpresaEarnings(document.getElementById('detTicker').textContent, true)">↻ Actualizar</button></div>
             <div style="display:flex;flex-direction:column;gap:20px;">
               <div><div style="font-size:11px;font-weight:700;color:var(--muted);margin-bottom:8px;">PRÓXIMO RESULTADO</div><div id="detEarningsNext">⏳ Buscando fecha...</div></div>
               <div style="border-top:1px solid var(--border);padding-top:16px;"><div style="font-size:11px;font-weight:700;color:var(--muted);margin-bottom:8px;">ÚLTIMO RESULTADO REPORTADO</div><div id="detEarningsLast">⏳ Consultando historial...</div></div>
             </div>
           </div>
-          <div class="card"><div class="card-label">Últimos Insiders (7 días)<button class="btn-ghost" style="padding:2px 8px;font-size:11px;border-radius:4px;" onclick="fetchEmpresaInsiders(document.getElementById('detTicker').textContent, true)">↻ Actualizar</button></div><div id="detInsiders">⏳ Analizando registros...</div></div>
+          <div class="card"><div class="card-label">Últimos Insiders (7 días)<button class="btn-tab" style="padding:4px 8px;font-size:11px;" onclick="fetchEmpresaInsiders(document.getElementById('detTicker').textContent, true)">↻ Actualizar</button></div><div id="detInsiders">⏳ Analizando registros...</div></div>
         </div>
         <div class="main-view-right" style="flex:1;position:relative;top:0;">
           <div class="card">
-            <div class="card-label">Noticias Recientes (Máx 3 días)<button class="btn-ghost" style="padding:2px 8px;font-size:11px;border-radius:4px;" onclick="document.querySelector('#newsTabsContainer .active').click()">↻ Actualizar</button></div>
-            <div class="news-tabs" id="newsTabsContainer">
-              <button class="btn-ghost active" onclick="loadNewsTab('Todas', this)">Todas</button>
-              <button class="btn-ghost" onclick="loadNewsTab('Investing', this)">Investing</button>
-              <button class="btn-ghost" onclick="loadNewsTab('Reuters', this)">Reuters</button>
-              <button class="btn-ghost" onclick="loadNewsTab('Bloomberg', this)">Bloomberg</button>
+            <div class="card-label">Noticias Recientes (Máx 3 días)<button class="btn-tab" style="padding:4px 8px;font-size:11px;" onclick="document.querySelector('#newsTabsContainer .active').click()">↻ Actualizar</button></div>
+            <div class="news-tabs" id="newsTabsContainer" style="display:flex; gap:8px;">
+              <button class="btn-tab active" onclick="loadNewsTab('Todas', this)">Todas</button>
+              <button class="btn-tab" onclick="loadNewsTab('Investing', this)">Investing</button>
+              <button class="btn-tab" onclick="loadNewsTab('Reuters', this)">Reuters</button>
+              <button class="btn-tab" onclick="loadNewsTab('Bloomberg', this)">Bloomberg</button>
             </div>
             <div id="detNews">⏳ Selecciona una pestaña para buscar...</div>
           </div>
@@ -274,7 +254,10 @@
     <!-- ═══ DIVIDENDOS ═══ -->
     <div class="page" id="page-dividendos">
       <div class="page-header" style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:16px;">
-        <h2 class="app-title-large" style="margin-bottom:0;">Dividendos cobrados</h2>
+        <h2 class="app-title-large" id="divPageTitle" style="margin-bottom:0;">Dividendos 2026</h2>
+        <div style="font-size:13px; color:var(--muted); text-align:right;">
+          Última actualización<br><strong id="divLastUploadDate" style="color:var(--text);">—</strong>
+        </div>
       </div>
 
       <div class="div-upload" id="divUpz">
@@ -285,36 +268,33 @@
       <div class="div-error" id="divError"></div>
 
       <div id="divTableCard" class="card" style="display:none;">
-        <div class="card-label">
-          <div style="display:flex; align-items:center; gap:16px;">
-            <div class="news-tabs" style="margin:0; padding:0; border:none; display:flex; align-items:center; gap:8px;">
-              <button class="btn-ghost active" id="btnDivFilterYear" onclick="setDivFilter('year')">Año en curso</button>
-              <select class="btn-ghost" id="divMonthSelect" onchange="setDivFilter('month')" style="display:none; outline:none; cursor:pointer; padding:6px 10px;"></select>
-              <button class="btn-ghost" id="btnDivFilterNew" onclick="setDivFilter('new')">Última actualización</button>
-              <span style="font-size:11px; color:var(--muted); margin-left: 12px; display:inline-block; border-left: 1px solid var(--border); padding-left: 12px;">Última subida: <strong id="divLastUploadDate" style="color:var(--text);">—</strong></span>
-            </div>
+        <div class="card-label" style="align-items:center; flex-wrap:wrap; gap:16px;">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <button class="btn-tab active" id="btnDivFilterAll" onclick="setDivFilter('all')">Año en curso</button>
+            <select class="btn-tab" id="divMonthSelect" onchange="setDivFilter('month')" style="display:none; outline:none;"></select>
+            <button class="btn-tab" id="btnDivFilterNew" onclick="setDivFilter('new')">Última actualización</button>
           </div>
-          <button class="btn-ghost" style="padding:2px 8px;font-size:11px;border-radius:4px;" onclick="borrarArchivo()">Limpiar</button>
+          <button class="btn-tab" style="padding:6px 12px;font-size:11px;" onclick="borrarArchivo()">Limpiar Archivo</button>
         </div>
         <div style="overflow-x:auto;">
           <table class="company-table div-table" id="divTable"><thead><tr id="divTHead"></tr></thead><tbody id="divTBody"></tbody></table>
         </div>
-        <p style="font-size:11px;color:var(--muted);margin-top:12px;">* Conversión: neto en divisa original antes de convertir a EUR. USD se mantiene en $.</p>
+        <p style="font-size:11px;color:var(--muted);margin-top:12px;">* Conversión unificada: 1$ = 1.08€. Datos generados a partir del archivo actual para total precisión.</p>
       </div>
 
-      <div class="div-section-label" id="divHistLabel" style="display:none">
-        Historial acumulado
-        <div class="news-tabs" style="margin:0 0 0 16px; padding:0; border:none; display:flex; align-items:center; gap:8px;">
-          <button class="btn-ghost active" id="btnHistAction" onclick="setHistView('action')">Por acciones</button>
-          <button class="btn-ghost" id="btnHistMonth" onclick="setHistView('month')">Por meses</button>
-        </div>
-      </div>
+      <div class="div-section-label" id="divHistLabel" style="display:none">Historial acumulado</div>
       <div id="divHistCard" class="card" style="display:none;">
-        <div id="histViewAction" style="overflow-x:auto;">
+        <div style="display:flex; gap:8px; margin-bottom:16px;">
+          <button class="btn-tab active" id="btnHistAction" onclick="setHistView('action')">Por acciones</button>
+          <button class="btn-tab" id="btnHistMonth" onclick="setHistView('month')">Por meses</button>
+        </div>
+        
+        <div style="overflow-x:auto;" id="histActionContainer">
           <table class="company-table div-table" id="divHTable"><thead><tr id="divHHead"></tr></thead><tbody id="divHBody"></tbody></table>
         </div>
-        <div id="histViewMonth" style="overflow-x:auto; display:none;">
-          <table class="company-table div-table" id="divHMonthTable"><tbody id="divHMonthBody"></tbody></table>
+        
+        <div style="overflow-x:auto; display:none;" id="histMonthContainer">
+          <table class="table-compact" id="divMonthTable"><tbody id="divMonthBody"></tbody></table>
         </div>
       </div>
     </div>
@@ -328,6 +308,7 @@
 const SHEET_CSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSXSofvMaT7bYXduO3ywx6Pg5q-cZccTc2GcitfKbv9pvqaDIW_0xR2RHamWwt1h6KVxpf5Vm0EwLe-/pub?output=csv';
 const DAYS_ES = ['Lunes','Martes','Miércoles','Jueves','Viernes'];
 const XMAP = {'lon':'.L','lse':'.L','epa':'.PA','ams':'.AS','bru':'.BR','asx':'.AX','tse':'.TO','tsx':'.TO','cve':'.V','bit':'.MI','xetr':'.DE','fra':'.DE','bme':'.MC','swx':'.SW','hkex':'.HK','tyo':'.T','nse':'.NS','bse':'.BO'};
+const FIXED_EUR_USD = 1.08;
 
 let companies = [];
 let currentSort = { column: 'name', asc: true };
@@ -338,18 +319,23 @@ let currentNewsName = '';
 let activeRequests = new AbortController();
 
 // ═══ DIVIDENDOS STATE ═══
-let divFilas = [];
-let divHistorial = [];
+let divFilasRaw = []; // Data original
+let divDataAll = []; // Data procesada (resultado de divBuild())
 let divOrd = {col:'fecha', dir:'asc'};
-let divHistOrd = {col:'neto', dir:'desc'};
+let divHistOrd = {col:'netoEur', dir:'desc'};
 let divExpanded = {};
-let histMonthExpanded = {};
-let cambios = {CAD:1.56, AUD:1.76, GBP:0.84, SEK:10.8, USD:1.08};
+let monthExpanded = {};
 
-let currentDivFilter = 'year';
+let currentDivFilter = 'all';
 let currentDivMonth = '';
-let prevUploadTs = null;
 let currentHistView = 'action';
+let previousUploadTimestamp = 0; // Timestamp exacto para comparar en "Última actualización"
+
+// Set dynamic year
+const currYear = new Date().getFullYear();
+document.getElementById('sidebarTitle').innerHTML = `Pitinvest<br>App ${currYear}`;
+document.getElementById('mainTitle').textContent = `Pitinvest App ${currYear}`;
+document.getElementById('divPageTitle').textContent = `Dividendos ${currYear}`;
 
 // ═══════════════════════════════════════════════════════════════
 //  TEMA
@@ -426,17 +412,30 @@ async function init() {
     if(!res.ok) throw new Error('Error HTTP ' + res.status);
     const lines = (await res.text()).trim().split('\n');
     const seen = new Set();
+    const ignoreCols = [4, 5, 8, 9]; // E, F, I, J
+
     lines.forEach(line => {
       const cols = parseCSVLine(line);
       for(let ci = 0; ci < cols.length; ci++) {
         const val = cols[ci];
         if(!val || val.length > 15 || val.includes(' ') || /^\d+$/.test(val) || !/^[A-Za-z:.\-]+$/.test(val)) continue;
         const yahoo = toYahoo(val);
-        if(!yahoo || seen.has(yahoo)) continue;
+        if(!yahoo) continue;
+        
+        // Determinar si viene de una columna prohibida (E,F,I,J)
+        const isIgnored = ignoreCols.includes(ci);
+        
+        if(seen.has(yahoo)) {
+            // Si ya existe y venía oculto, pero ahora se lee en una columna válida, quitar la restricción
+            const existing = companies.find(c => c.yahooTicker === yahoo);
+            if (existing && existing.ignoreDiv && !isIgnored) existing.ignoreDiv = false;
+            continue;
+        }
+        
         let name = yahoo;
         if(ci+1 < cols.length && cols[ci+1] && cols[ci+1].length > 1) name = cols[ci+1];
         seen.add(yahoo);
-        companies.push({ name, origTicker: val, yahooTicker: yahoo });
+        companies.push({ name, origTicker: val, yahooTicker: yahoo, ignoreDiv: isIgnored });
       }
     });
     if(!companies.length) throw new Error('Sin tickers válidos.');
@@ -449,17 +448,14 @@ async function init() {
     if(e.name !== 'AbortError') el.textContent = '⚠️ Error';
   }
 
-  // Load div history & update date
-  try { const h = localStorage.getItem('div_historial_v2'); if(h) divHistorial = JSON.parse(h); } catch(e) {}
-  
+  // Load Date Config
   const savedTs = localStorage.getItem('div_last_upload_v2');
   if(savedTs) {
-      prevUploadTs = parseInt(savedTs, 10);
-      const dt = new Date(prevUploadTs);
+      const ts = parseInt(savedTs, 10);
+      const dt = new Date(ts);
       document.getElementById('divLastUploadDate').textContent = `${String(dt.getDate()).padStart(2,'0')}/${String(dt.getMonth()+1).padStart(2,'0')}/${dt.getFullYear()}`;
+      previousUploadTimestamp = ts; // Usado para el filtro "Última actualización" al cargar nuevo archivo
   }
-  
-  renderDivHist();
 }
 
 function sortTable(col) {
@@ -487,7 +483,7 @@ function renderCarteraTable() {
 function toggleWeek(w) { document.getElementById('toggle'+w).classList.toggle('open'); document.getElementById('body'+w).classList.toggle('open'); }
 
 // ═══════════════════════════════════════════════════════════════
-//  EARNINGS
+//  EARNINGS & INSIDERS & EMPRESA
 // ═══════════════════════════════════════════════════════════════
 async function fetchEarnings(isBackground = false, signal = activeRequests.signal) {
   if(!companies.length) return;
@@ -518,30 +514,27 @@ async function fetchEarnings(isBackground = false, signal = activeRequests.signa
   const next = unique.filter(r => NW.some(d => toISO(d) === r.date));
   earningsAlerts = new Set(curr.map(r => r.ticker));
   renderCarteraTable();
-  renderWeek('Current', curr, CW); renderWeek('Next', next, NW);
+  
+  const renderWk = (which, items, weekDates) => {
+    const countEl = document.getElementById('count'+which), bodyEl = document.getElementById('body'+which);
+    countEl.textContent = `${items.length} empresa${items.length !== 1 ? 's' : ''}`;
+    countEl.className = `week-count ${items.length > 0 ? 'has' : 'empty'}`;
+    const byDate = {}; items.forEach(it => { (byDate[it.date] = byDate[it.date] || []).push(it); });
+    let html = '';
+    weekDates.forEach((date, i) => {
+      const key = toISO(date); const di = byDate[key] || []; const isDayToday = isToday(date);
+      let compsHtml = '<span style="color:var(--muted)">—</span>';
+      if(di.length > 0) compsHtml = di.map(it => `<div class="earn-chip"><div class="earn-chip-top"><span class="earn-ticker">${it.ticker}</span><span class="earn-time ${it.timeClass}">${it.timeLabel}</span></div><span class="earn-name">${it.name}</span></div>`).join('');
+      html += `<div class="day-row"><div class="day-name-col"><div class="day-name-txt">${DAYS_ES[i]} ${isDayToday ? '<span class="today-dot">HOY</span>' : ''}</div><div class="day-date-txt">${fmtES(date)}</div></div><div class="day-companies">${compsHtml}</div></div>`;
+    });
+    bodyEl.innerHTML = html;
+  };
+  renderWk('Current', curr, CW); renderWk('Next', next, NW);
   ['Current','Next'].forEach(w => { document.getElementById('toggle'+w).classList.add('open'); document.getElementById('body'+w).classList.add('open'); });
   document.getElementById('searchInfo').textContent = `✓ Sincronizado: ${curr.length} esta semana, ${next.length} la próxima.`;
   if(!isBackground) { btn.disabled = false; btn.textContent = '▶ ACTUALIZAR EARNINGS'; }
 }
 
-function renderWeek(which, items, weekDates) {
-  const countEl = document.getElementById('count'+which), bodyEl = document.getElementById('body'+which);
-  countEl.textContent = `${items.length} empresa${items.length !== 1 ? 's' : ''}`;
-  countEl.className = `week-count ${items.length > 0 ? 'has' : 'empty'}`;
-  const byDate = {}; items.forEach(it => { (byDate[it.date] = byDate[it.date] || []).push(it); });
-  let html = '';
-  weekDates.forEach((date, i) => {
-    const key = toISO(date); const di = byDate[key] || []; const isDayToday = isToday(date);
-    let compsHtml = '<span style="color:var(--muted)">—</span>';
-    if(di.length > 0) compsHtml = di.map(it => `<div class="earn-chip"><div class="earn-chip-top"><span class="earn-ticker">${it.ticker}</span><span class="earn-time ${it.timeClass}">${it.timeLabel}</span></div><span class="earn-name">${it.name}</span></div>`).join('');
-    html += `<div class="day-block"><div class="day-row"><div class="day-name-col"><div class="day-name-txt">${DAYS_ES[i]} ${isDayToday ? '<span class="today-dot">HOY</span>' : ''}</div><div class="day-date-txt">${fmtES(date)}</div></div><div class="day-companies">${compsHtml}</div></div></div>`;
-  });
-  bodyEl.innerHTML = html;
-}
-
-// ═══════════════════════════════════════════════════════════════
-//  INSIDERS
-// ═══════════════════════════════════════════════════════════════
 async function fetchInsiders(isBackground = false, signal = activeRequests.signal) {
   if(!companies.length) return;
   const btn = document.getElementById('btnInsiders');
@@ -591,7 +584,7 @@ async function fetchInsiders(isBackground = false, signal = activeRequests.signa
         const compName = companies.find(c => c.yahooTicker === ticker)?.name || ticker;
         const linkSource = `https://www.nasdaq.com/market-activity/stocks/${base(ticker).toLowerCase()}/insider-activity`;
         let tHtml = `<div class="insider-card"><div class="insider-card-header"><span class="ins-ticker">${ticker}</span><span class="ins-company">${compName}</span><span class="ins-badge">${tradesByTicker[ticker].length} mov.</span></div><table class="ins-table"><thead><tr><th>Fecha</th><th>Insider</th><th>Operación</th><th>Importancia</th><th>Acciones</th><th>Precio</th><th>Valor Total</th></tr></thead><tbody>`;
-        tradesByTicker[ticker].forEach(t => { tHtml += `<tr class="row-link" onclick="window.open('${linkSource}','_blank')"><td class="ins-mono">${t.date}</td><td><b>${t.insider}</b><br><span style="font-size:11px;color:var(--muted)">${t.title}</span></td><td style="color:${t.isSale?'var(--red)':'var(--green)'};font-weight:600;"><span class="square-ind ${t.isSale?'sq-red':'sq-green'}"></span>${t.isSale?'Venta':'Compra'}</td><td style="color:${t.relColor};font-weight:600;font-size:12px;">${t.relevance}</td><td class="ins-mono">${t.qty}</td><td class="ins-mono">${t.price}</td><td class="ins-mono" style="font-weight:700">${t.valueStr}</td></tr>`; });
+        tradesByTicker[ticker].forEach(t => { tHtml += `<tr onclick="window.open('${linkSource}','_blank')"><td class="ins-mono">${t.date}</td><td><b>${t.insider}</b><br><span style="font-size:11px;color:var(--muted)">${t.title}</span></td><td style="color:${t.isSale?'var(--red)':'var(--green)'};font-weight:600;"><span class="square-ind ${t.isSale?'sq-red':'sq-green'}"></span>${t.isSale?'Venta':'Compra'}</td><td style="color:${t.relColor};font-weight:600;font-size:12px;">${t.relevance}</td><td class="ins-mono">${t.qty}</td><td class="ins-mono">${t.price}</td><td class="ins-mono" style="font-weight:700">${t.valueStr}</td></tr>`; });
         tHtml += '</tbody></table></div>';
         globalHtml += tHtml;
       });
@@ -602,9 +595,6 @@ async function fetchInsiders(isBackground = false, signal = activeRequests.signa
   if(!isBackground) { btn.disabled = false; btn.textContent = '▶ ACTUALIZAR INSIDERS'; }
 }
 
-// ═══════════════════════════════════════════════════════════════
-//  EMPRESA DETAILS
-// ═══════════════════════════════════════════════════════════════
 function abrirEmpresa(ticker) {
   const comp = companies.find(c => c.yahooTicker === ticker); if(!comp) return;
   currentNewsTicker = ticker; currentNewsName = comp.name;
@@ -641,7 +631,7 @@ async function fetchEmpresaInsiders(ticker, force = false) {
     const linkSource = `https://www.nasdaq.com/market-activity/stocks/${base(ticker).toLowerCase()}/insider-activity`;
     let html = '<table class="ins-table" style="font-size:12px;"><thead><tr><th>Fecha</th><th>Operación</th><th>Valor</th></tr></thead><tbody>';
     let found = 0; const nowMs = Date.now();
-    for(const row of rows) { if(!row.lastDate||!row.transactionType) continue; const dp=row.lastDate.split('/'); if(dp.length!==3) continue; const rd=new Date(`${dp[2]}-${dp[0]}-${dp[1]}`); if((nowMs-rd.getTime())/(1000*3600*24)>7) continue; const type=row.transactionType.toLowerCase(); const isSale=type.includes('sell')||type.includes('sale'); const isBuy=type.includes('buy')||type.includes('purchase'); if(!isSale&&!isBuy) continue; const sh=parseFloat((row.sharesTraded||'0').replace(/,/g,'')); const pr=parseFloat((row.lastPrice||'0').replace(/,/g,'')); if(isNaN(sh)||isNaN(pr)) continue; const v=sh*pr; if(v<1000) continue; const fd=`${dp[1].padStart(2,'0')}/${dp[0].padStart(2,'0')}/${dp[2]}`; html+=`<tr class="row-link" onclick="window.open('${linkSource}','_blank')"><td class="ins-mono">${fd}</td><td style="color:${isSale?'var(--red)':'var(--green)'};font-weight:600;"><span class="square-ind ${isSale?'sq-red':'sq-green'}"></span>${isSale?'Venta':'Compra'}</td><td class="ins-mono" style="font-weight:700">$${v.toLocaleString('en-US',{maximumFractionDigits:0})}</td></tr>`; found++; if(found>=5) break; }
+    for(const row of rows) { if(!row.lastDate||!row.transactionType) continue; const dp=row.lastDate.split('/'); if(dp.length!==3) continue; const rd=new Date(`${dp[2]}-${dp[0]}-${dp[1]}`); if((nowMs-rd.getTime())/(1000*3600*24)>7) continue; const type=row.transactionType.toLowerCase(); const isSale=type.includes('sell')||type.includes('sale'); const isBuy=type.includes('buy')||type.includes('purchase'); if(!isSale&&!isBuy) continue; const sh=parseFloat((row.sharesTraded||'0').replace(/,/g,'')); const pr=parseFloat((row.lastPrice||'0').replace(/,/g,'')); if(isNaN(sh)||isNaN(pr)) continue; const v=sh*pr; if(v<1000) continue; const fd=`${dp[1].padStart(2,'0')}/${dp[0].padStart(2,'0')}/${dp[2]}`; html+=`<tr onclick="window.open('${linkSource}','_blank')"><td class="ins-mono">${fd}</td><td style="color:${isSale?'var(--red)':'var(--green)'};font-weight:600;"><span class="square-ind ${isSale?'sq-red':'sq-green'}"></span>${isSale?'Venta':'Compra'}</td><td class="ins-mono" style="font-weight:700">$${v.toLocaleString('en-US',{maximumFractionDigits:0})}</td></tr>`; found++; if(found>=5) break; }
     html += '</tbody></table>';
     document.getElementById('detInsiders').innerHTML = found === 0 ? '<span style="color:var(--muted)">Sin movimientos recientes.</span>' : html;
   } catch(e) { document.getElementById('detInsiders').innerHTML = '<span style="color:var(--muted)">No se pudo extraer la información.</span>'; }
@@ -671,8 +661,8 @@ async function fetchEmpresaNews(compName, ticker, source) {
     newsItems.sort((a,b) => b.date - a.date);
     const top = newsItems.slice(0,5);
     await Promise.all(top.map(async i => { i.titleES = await traducirTexto(i.title); }));
-    let html = '<ul class="news-list">';
-    top.forEach(i => { html += `<li><div class="news-date">${i.dateStr}</div><a href="${i.link}" target="_blank" class="news-title">${i.titleES}</a></li>`; });
+    let html = '<ul style="list-style:none; padding:0; display:flex; flex-direction:column; gap:12px;">';
+    top.forEach(i => { html += `<li style="border-bottom:1px solid var(--border); padding-bottom:12px;"><div style="font-size:11px; color:var(--muted); margin-bottom:4px; font-weight:500;">${i.dateStr}</div><a href="${i.link}" target="_blank" style="color:var(--text); text-decoration:none; font-weight:500; font-size:13px; display:block;">${i.titleES}</a></li>`; });
     html += '</ul>';
     document.getElementById('detNews').innerHTML = html;
   } catch(e) { document.getElementById('detNews').innerHTML = '<span style="color:var(--muted)">Fallo al descargar noticias.</span>'; }
@@ -682,255 +672,283 @@ async function fetchEmpresaNews(compName, ticker, source) {
 //  DIVIDENDOS
 // ═══════════════════════════════════════════════════════════════
 
-// --- Helpers dividendos ---
-function divParseCur(d) { const m = d.match(/CASH DIVIDEND\s+([A-Z]{3})\s+/); return m ? m[1] : 'USD'; }
-function divToDate(s) { if(!s) return new Date(0); const p = s.split('/'); return p.length===3 ? new Date(p[2],p[1]-1,p[0]) : new Date(s); }
-function divConvEUR(n,cur) { if(cur==='EUR'||cur==='USD') return null; const r = cambios[cur]; return r ? n/r : null; }
-function divCurClass(c) { const m={USD:'dUSD',EUR:'dEUR',CAD:'dCAD',AUD:'dAUD',GBP:'dGBP',SEK:'dSEK'}; return 'div-cur '+(m[c]||'dX'); }
-function divEnCartera(sym) { if(!companies.length) return true; const s = sym.toUpperCase(); return companies.some(c => base(c.yahooTicker)===s || c.yahooTicker.toUpperCase()===s); }
+// --- Helpers IB ---
+function parseIbDate(s) {
+  if(!s) return new Date(0);
+  s = s.trim();
+  if(s.includes('/')) {
+    const p = s.split('/');
+    return p.length===3 ? new Date(p[2], p[1]-1, p[0]) : new Date(0);
+  }
+  if(s.includes('-')) {
+    const p = s.split('-');
+    return p.length===3 ? new Date(p[0], p[1]-1, p[2]) : new Date(0);
+  }
+  if(s.length===8) { // YYYYMMDD
+    return new Date(s.substring(0,4), parseInt(s.substring(4,6))-1, s.substring(6,8));
+  }
+  return new Date(s);
+}
+
+function getIbkrTicker(sym, desc) {
+  let t = sym;
+  const m = (desc || '').match(/^([A-Za-z0-9.]+)\(/);
+  if (m) t = m[1];
+  return base(t);
+}
+
+function divParseCur(d) { 
+  const m = d.match(/CASH DIVIDEND\s+([A-Z]{3})\s+/); 
+  if (m) return m[1]; 
+  
+  // Rescate de divisa leyendo el país del ISIN (ej. FR0014... -> EUR)
+  const isinMatch = d.match(/\(([A-Z]{2})[A-Za-z0-9]{10}\)/);
+  if (isinMatch) {
+      const cc = isinMatch[1];
+      if (['FR','DE','ES','IT','NL','FI','BE','PT','IE'].includes(cc)) return 'EUR';
+      if (cc === 'GB') return 'GBP';
+      if (cc === 'US') return 'USD';
+      if (cc === 'CA') return 'CAD';
+      if (cc === 'AU') return 'AUD';
+      if (cc === 'SE') return 'SEK';
+      if (cc === 'CH') return 'CHF';
+  }
+  return 'USD'; 
+}
+
+// Para que un dividendo se cuente, debe estar en la cartera y NO provenir de las columnas prohibidas
+function divEnCartera(sym, desc) { 
+  if(!companies.length) return true; 
+  const s = getIbkrTicker(sym, desc); 
+  return companies.some(c => (base(c.yahooTicker)===s || c.yahooTicker.toUpperCase()===s) && !c.ignoreDiv); 
+}
+
 function divGetNombre(sym) { const s = sym.toUpperCase(); const c = companies.find(x => base(x.yahooTicker)===s || x.yahooTicker.toUpperCase()===s); return c ? c.name : null; }
-function divNetStr(e,u) {
-  if(e>0&&u>0) return `<span style="color:var(--green)">€${e.toFixed(2)}</span> <span style="color:var(--muted);font-size:10px">+</span> <span style="color:var(--accent)">$${u.toFixed(2)}</span>`;
-  if(e>0) return `<span style="color:var(--green)">€${e.toFixed(2)}</span>`;
-  if(u>0) return `<span style="color:var(--accent)">$${u.toFixed(2)}</span>`;
-  return '<span style="color:var(--muted)">—</span>';
-}
-function divUnifiedTotalStr(e, u) {
-  const total = e + (u / cambios.USD);
-  return `<span style="color:var(--green)">€${total.toFixed(2)}</span>`;
-}
+function divCurClass(c) { const m={USD:'dUSD',EUR:'dEUR',CAD:'dCAD',AUD:'dAUD',GBP:'dGBP',SEK:'dSEK'}; return 'div-cur '+(m[c]||'dX'); }
 function divSortIco(ord,col) { if(ord.col!==col) return '<span class="div-sort-ico">⇅</span>'; return `<span class="div-sort-ico">${ord.dir==='asc'?'▲':'▼'}</span>`; }
 function divSort(arr,col,dir,fn) { return arr.slice().sort((a,b) => { let va=fn(a,col),vb=fn(b,col); if(va==null)return 1;if(vb==null)return -1; return va<vb?(dir==='asc'?-1:1):va>vb?(dir==='asc'?1:-1):0; }); }
 
-// --- Parsers IB ---
-function divParseCSV(txt) { const lines=txt.trim().split('\n'), out=[]; for(let i=1;i<lines.length;i++){const c=parseCSVLine(lines[i]);if(c.length>=4)out.push({sym:c[0].trim(),desc:c[1],fecha:c[2].trim(),importe:parseFloat(c[3])||0});}return out; }
+// Parsers
+function divParseCSV(txt) { const lines=txt.trim().split('\n'), out=[]; for(let i=1;i<lines.length;i++){const c=parseCSVLine(lines[i]);if(c.length>=4)out.push({sym:c[0].trim(),desc:c[1],fechaStr:c[2].trim(),importe:parseFloat(c[3])||0});}return out; }
 function divParseXML(txt) {
   const out=[], re=/<CashTransaction\b([^>]*)>/g; let m;
-  while((m=re.exec(txt))!==null){ const a=m[1]; const ga=k=>{const r=a.match(new RegExp('\\b'+k+'="([^"]*)"'));return r?r[1]:'';}; const sym=ga('symbol'); if(!sym) continue; out.push({sym,desc:ga('description'),fecha:ga('settleDate'),importe:parseFloat(ga('amount'))||0}); }
+  while((m=re.exec(txt))!==null){ const a=m[1]; const ga=k=>{const r=a.match(new RegExp('\\b'+k+'="([^"]*)"'));return r?r[1]:'';}; const sym=ga('symbol'); if(!sym) continue; out.push({sym,desc:ga('description'),fechaStr:ga('settleDate'),importe:parseFloat(ga('amount'))||0}); }
   if(out.length) return out;
-  try { return Array.from(new DOMParser().parseFromString(txt,'text/xml').querySelectorAll('CashTransaction')).map(n=>({sym:n.getAttribute('symbol')||'',desc:n.getAttribute('description')||'',fecha:n.getAttribute('settleDate')||'',importe:parseFloat(n.getAttribute('amount'))||0})); } catch(e) {}
+  try { return Array.from(new DOMParser().parseFromString(txt,'text/xml').querySelectorAll('CashTransaction')).map(n=>({sym:n.getAttribute('symbol')||'',desc:n.getAttribute('description')||'',fechaStr:n.getAttribute('settleDate')||'',importe:parseFloat(n.getAttribute('amount'))||0})); } catch(e) {}
   return out;
 }
 
-// --- Build dividends ---
-function divBuild() {
+// Build Data (from Raw Rows)
+function divBuild(rows) {
   const grp = {};
-  divFilas.filter(f => f.sym && divEnCartera(f.sym)).forEach(f => {
-    const k = f.sym.toUpperCase()+'|'+f.fecha;
-    if(!grp[k]) grp[k] = {sym:f.sym.toUpperCase(), fecha:f.fecha, bruto:0, tax:0, desc:''};
+  rows.filter(f => f.sym && divEnCartera(f.sym, f.desc)).forEach(f => {
+    const dObj = parseIbDate(f.fechaStr);
+    const dKey = toISO(dObj); // Unificamos fechas a YYYY-MM-DD internamente
+    const realTicker = getIbkrTicker(f.sym, f.desc);
+    
+    const k = realTicker.toUpperCase()+'|'+dKey;
+    if(!grp[k]) grp[k] = {sym:realTicker.toUpperCase(), fechaStr:f.fechaStr, fechaObj: dObj, bruto:0, tax:0, desc:''};
     if(f.importe>0) { grp[k].bruto+=f.importe; grp[k].desc=f.desc; } else grp[k].tax+=f.importe;
   });
-  return Object.values(grp).filter(g=>g.bruto>0).map(g => {
-    const cur=divParseCur(g.desc), neto=g.bruto+g.tax, conv=divConvEUR(neto,cur);
-    return {ticker:g.sym, fecha:g.fecha, cur, bruto:g.bruto, tax:g.tax, netoOrig:neto, conv, netoFinal:conv!==null?conv:neto, sym:cur==='USD'?'$':'€'};
-  });
-}
-
-function populateMonthSelect(allData) {
-  const select = document.getElementById('divMonthSelect');
-  const months = new Set();
-  allData.forEach(d => {
-    const dt = divToDate(d.fecha);
-    if (dt.getTime() > 0) {
-        months.add(`${dt.getFullYear()}-${String(dt.getMonth()+1).padStart(2,'0')}`);
-    }
-  });
-  const sortedMonths = Array.from(months).sort((a,b) => b.localeCompare(a));
-  const monthNames = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
   
-  let html = '<option value="">Seleccionar Mes...</option>';
-  sortedMonths.forEach(m => {
-    const [yyyy, mm] = m.split('-');
-    html += `<option value="${m}">${monthNames[parseInt(mm)-1]} ${yyyy}</option>`;
+  return Object.values(grp).filter(g=>g.bruto>0).map(g => {
+    const cur = divParseCur(g.desc); 
+    const netoOrig = g.bruto + g.tax;
+    
+    // CONVERSIÓN UNIFICADA - Se aplica a TODAS las tablas
+    let netoEur = netoOrig;
+    if(cur === 'USD') netoEur = netoOrig / FIXED_EUR_USD;
+    
+    return {
+      ticker: g.sym, 
+      fechaStr: fmtES(g.fechaObj), // Mostramos DD/MM/YYYY en UI
+      fechaObj: g.fechaObj, 
+      cur, bruto:g.bruto, tax:g.tax, netoOrig, netoEur, 
+      sym: cur==='USD'?'$':'€'
+    };
   });
-  select.innerHTML = html;
-  select.style.display = sortedMonths.length > 0 ? 'inline-block' : 'none';
 }
 
 function setDivFilter(f) {
   currentDivFilter = f;
-  document.getElementById('btnDivFilterYear').classList.toggle('active', f === 'year');
-  document.getElementById('btnDivFilterNew').classList.toggle('active', f === 'new');
+  const btnAll = document.getElementById('btnDivFilterAll');
+  const btnNew = document.getElementById('btnDivFilterNew');
   const sel = document.getElementById('divMonthSelect');
   
-  if (f !== 'month') {
-    sel.value = '';
-    currentDivMonth = '';
-  } else {
+  btnAll.classList.remove('active');
+  btnNew.classList.remove('active');
+  
+  if (f === 'all') {
+    btnAll.classList.add('active');
+    sel.value = ''; currentDivMonth = '';
+  } else if (f === 'new') {
+    btnNew.classList.add('active');
+    sel.value = ''; currentDivMonth = '';
+  } else if (f === 'month') {
     currentDivMonth = sel.value;
   }
   renderDivTable();
 }
 
-// --- Render dividends table ---
-function divValFn(d,col) { if(col==='ticker')return d.ticker; if(col==='fecha')return divToDate(d.fecha).getTime(); if(col==='cur')return d.cur; if(col==='bruto')return d.bruto; if(col==='tax')return d.tax; if(col==='conv')return d.netoOrig; if(col==='neto')return d.netoFinal; return 0; }
+function setHistView(v) {
+  currentHistView = v;
+  document.getElementById('btnHistAction').classList.toggle('active', v === 'action');
+  document.getElementById('btnHistMonth').classList.toggle('active', v === 'month');
+  
+  document.getElementById('histActionContainer').style.display = v === 'action' ? 'block' : 'none';
+  document.getElementById('histMonthContainer').style.display = v === 'month' ? 'block' : 'none';
+  renderDivHist();
+}
+
+// --- Render Table 1 (Archivo actual) ---
+function divValFn(d,col) { if(col==='ticker')return d.ticker; if(col==='fecha')return d.fechaObj.getTime(); if(col==='cur')return d.cur; if(col==='bruto')return d.bruto; if(col==='tax')return d.tax; if(col==='conv')return d.netoOrig; if(col==='netoEur')return d.netoEur; return 0; }
 function divClickSort(col) { divOrd.dir=(divOrd.col===col&&divOrd.dir==='asc')?'desc':'asc'; divOrd.col=col; renderDivTable(); }
 
 function renderDivTable() {
-  if(!divFilas.length) return;
+  if(!divDataAll.length) return;
   
-  let all = divBuild();
-  const currYear = new Date().getFullYear();
+  let currentData = [...divDataAll];
   
-  if (currentDivFilter === 'year') {
-      all = all.filter(d => divToDate(d.fecha).getFullYear() === currYear);
-  } else if (currentDivFilter === 'month' && currentDivMonth) {
-      all = all.filter(d => {
-          const dt = divToDate(d.fecha);
-          const mKey = `${dt.getFullYear()}-${String(dt.getMonth()+1).padStart(2,'0')}`;
+  if (currentDivFilter === 'month' && currentDivMonth) {
+      currentData = currentData.filter(d => {
+          const mKey = `${d.fechaObj.getFullYear()}-${String(d.fechaObj.getMonth()+1).padStart(2,'0')}`;
           return mKey === currentDivMonth;
       });
   } else if (currentDivFilter === 'new') {
-      if (prevUploadTs) {
-          all = all.filter(d => divToDate(d.fecha).getTime() > prevUploadTs);
-      }
+      currentData = currentData.filter(d => d.fechaObj.getTime() > previousUploadTimestamp);
   }
 
-  const sorted = divSort(all, divOrd.col, divOrd.dir, divValFn);
+  const sorted = divSort(currentData, divOrd.col, divOrd.dir, divValFn);
   const order=[], byT={};
   sorted.forEach(d => { if(!byT[d.ticker]){byT[d.ticker]=[];order.push(d.ticker);} byT[d.ticker].push(d); });
 
   document.getElementById('divTableCard').style.display = 'block';
-  const cols=[{k:'ticker',l:'Ticker'},{k:'fecha',l:'Fecha'},{k:'cur',l:'Divisa'},{k:'bruto',l:'Bruto',r:1},{k:'tax',l:'Retención',r:1},{k:'conv',l:'Conversión',r:1},{k:'neto',l:'Neto',r:1}];
-  document.getElementById('divTHead').innerHTML = cols.map(c => `<th class="${c.r?'R':'L'}" onclick="divClickSort('${c.k}')" style="cursor:pointer">${c.l}${divSortIco(divOrd,c.k)}</th>`).join('');
+  const cols=[{k:'ticker',l:'Ticker'},{k:'fecha',l:'Fecha'},{k:'cur',l:'Divisa'},{k:'bruto',l:'Bruto',r:1},{k:'tax',l:'Retención',r:1},{k:'conv',l:'Original',r:1},{k:'netoEur',l:'Neto (EUR)',r:1}];
+  document.getElementById('divTHead').innerHTML = cols.map(c => `<th class="${c.r?'R':'L'}" onclick="divClickSort('${c.k}')">${c.l}${divSortIco(divOrd,c.k)}</th>`).join('');
 
   const tbody = document.getElementById('divTBody');
-  if(!sorted.length) { tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:24px;color:var(--muted)">No hay dividendos en este filtro</td></tr>`; return; }
+  if(!sorted.length) { tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:24px;color:var(--muted)">No hay dividendos para este filtro</td></tr>`; return; }
 
   let html = '';
   order.forEach(ticker => {
     const g=byT[ticker], exp=divExpanded[ticker], multi=g.length>1;
-    let tB=0,tT=0,tN=0; g.forEach(x=>{tB+=x.bruto;tT+=x.tax;tN+=x.netoFinal;});
-    const hasC=g.some(x=>x.conv!==null); let tC=0; g.filter(x=>x.conv!==null).forEach(x=>{tC+=x.netoOrig;});
+    let tB=0,tT=0,tNE=0; g.forEach(x=>{tB+=x.bruto;tT+=x.tax;tNE+=x.netoEur;});
+    const hasC=g.some(x=>x.cur==='USD'); let tC=0; g.filter(x=>x.cur==='USD').forEach(x=>{tC+=x.netoOrig;});
     const cur=g[0].cur, sym=g[0].sym;
     const nom = divGetNombre(ticker);
 
     if(multi) {
       const tdMulti = nom ? `<td class="L" style="font-weight:600;white-space:nowrap;"><div>${ticker} <span class="div-multi">${g.length}</span></div><div class="div-name-sub">${nom}</div></td>` : `<td class="L" style="font-weight:600;">${ticker} <span class="div-multi">${g.length}</span></td>`;
-      html += `<tr style="cursor:pointer;background:${exp?'var(--surface2)':'transparent'}" onclick="divToggleExp('${ticker}')">${tdMulti}<td class="L" style="color:var(--muted);font-size:12px;font-style:italic;">ver detalle</td><td class="L"><span class="${divCurClass(cur)}">${cur}</span></td><td class="R div-mono">${tB.toFixed(2)}</td><td class="R div-mono" style="color:${tT<0?'var(--red)':'var(--muted)'}">${tT?tT.toFixed(2):'—'}</td><td class="R div-mono" style="color:${hasC?'var(--text)':'var(--muted)'}">${hasC?tC.toFixed(2)+' '+cur:'—'}</td><td class="R div-mono" style="font-weight:700;color:var(--green)">${sym}${tN.toFixed(2)}</td></tr>`;
-      g.forEach((x,i) => { html += `<tr class="div-sub" style="display:${exp?'table-row':'none'}"><td class="L" style="padding-left:28px;color:var(--muted)">${ticker}</td><td class="L div-mono" style="color:var(--muted)">${x.fecha}</td><td><span class="${divCurClass(x.cur)}" style="opacity:.6">${x.cur}</span></td><td class="R div-mono" style="color:var(--muted)">${x.bruto.toFixed(2)}</td><td class="R div-mono" style="color:${x.tax<0?'var(--red)':'var(--muted)'}">${x.tax?x.tax.toFixed(2):'—'}</td><td class="R div-mono" style="color:var(--muted)">${x.conv!==null?x.netoOrig.toFixed(2)+' '+x.cur:'—'}</td><td class="R div-mono" style="color:var(--green)">${x.sym}${x.netoFinal.toFixed(2)}</td></tr>`; });
+      html += `<tr style="cursor:pointer;background:${exp?'var(--surface2)':'transparent'}" onclick="divToggleExp('${ticker}')">${tdMulti}<td class="L" style="color:var(--muted);font-size:12px;font-style:italic;">ver detalle</td><td class="L"><span class="${divCurClass(cur)}">${cur}</span></td><td class="R div-mono">${tB.toFixed(2)}</td><td class="R div-mono" style="color:${tT<0?'var(--red)':'var(--muted)'}">${tT?tT.toFixed(2):'—'}</td><td class="R div-mono" style="color:${hasC?'var(--text)':'var(--muted)'}">${hasC?tC.toFixed(2)+' '+cur:'—'}</td><td class="R div-mono" style="font-weight:700;color:var(--green)">€${tNE.toFixed(2)}</td></tr>`;
+      g.forEach((x,i) => { html += `<tr class="div-sub" style="display:${exp?'table-row':'none'}"><td class="L" style="padding-left:28px;color:var(--muted)">${ticker}</td><td class="L div-mono" style="color:var(--muted)">${x.fechaStr}</td><td><span class="${divCurClass(x.cur)}" style="opacity:.6">${x.cur}</span></td><td class="R div-mono" style="color:var(--muted)">${x.bruto.toFixed(2)}</td><td class="R div-mono" style="color:${x.tax<0?'var(--red)':'var(--muted)'}">${x.tax?x.tax.toFixed(2):'—'}</td><td class="R div-mono" style="color:var(--muted)">${x.cur==='USD'?x.netoOrig.toFixed(2)+' '+x.cur:'—'}</td><td class="R div-mono" style="color:var(--green)">€${x.netoEur.toFixed(2)}</td></tr>`; });
     } else {
       const x=g[0];
       const tdSingle = nom ? `<td class="L" style="font-weight:600;white-space:nowrap;"><div>${ticker}</div><div class="div-name-sub">${nom}</div></td>` : `<td class="L" style="font-weight:600;">${ticker}</td>`;
-      html += `<tr>${tdSingle}<td class="L div-mono" style="color:var(--muted)">${x.fecha}</td><td class="L"><span class="${divCurClass(x.cur)}">${x.cur}</span></td><td class="R div-mono">${x.bruto.toFixed(2)}</td><td class="R div-mono" style="color:${x.tax<0?'var(--red)':'var(--muted)'}">${x.tax?x.tax.toFixed(2):'—'}</td><td class="R div-mono" style="color:${x.conv!==null?'var(--text)':'var(--muted)'}">${x.conv!==null?x.netoOrig.toFixed(2)+' '+x.cur:'—'}</td><td class="R div-mono" style="font-weight:700;color:var(--green)">${x.sym}${x.netoFinal.toFixed(2)}</td></tr>`;
+      html += `<tr>${tdSingle}<td class="L div-mono" style="color:var(--muted)">${x.fechaStr}</td><td class="L"><span class="${divCurClass(x.cur)}">${x.cur}</span></td><td class="R div-mono">${x.bruto.toFixed(2)}</td><td class="R div-mono" style="color:${x.tax<0?'var(--red)':'var(--muted)'}">${x.tax?x.tax.toFixed(2):'—'}</td><td class="R div-mono" style="color:${x.cur==='USD'?'var(--text)':'var(--muted)'}">${x.cur==='USD'?x.netoOrig.toFixed(2)+' '+x.cur:'—'}</td><td class="R div-mono" style="font-weight:700;color:var(--green)">€${x.netoEur.toFixed(2)}</td></tr>`;
     }
   });
 
-  // Total
-  let tE=0,tU=0,tB=0,tT=0;
-  sorted.forEach(d=>{if(d.sym==='€')tE+=d.netoFinal;else tU+=d.netoFinal;tB+=d.bruto;tT+=d.tax;});
-  html += `<tr class="div-total"><td colspan="3" class="L" style="font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)">Total</td><td class="R div-mono">${tB.toFixed(2)}</td><td class="R div-mono" style="color:var(--red)">${tT.toFixed(2)}</td><td class="R div-mono" style="color:var(--muted)">—</td><td class="R div-mono">${divUnifiedTotalStr(tE,tU)}</td></tr>`;
+  let totalEuros = sorted.reduce((sum, d) => sum + d.netoEur, 0);
+  html += `<tr class="div-total"><td colspan="6" class="L" style="font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted); text-align:right;">Total Unificado</td><td class="R div-mono" style="font-size:14px; color:var(--green)">€${totalEuros.toFixed(2)}</td></tr>`;
   tbody.innerHTML = html;
-
-  // Acumular historial
-  all.forEach(d => { if(!divHistorial.some(r=>r.ticker===d.ticker&&r.fecha===d.fecha)) divHistorial.push({ticker:d.ticker,fecha:d.fecha,neto:d.netoFinal,sym:d.sym}); });
-  try { localStorage.setItem('div_historial_v2', JSON.stringify(divHistorial)); } catch(e) {}
-  renderDivHist();
-
-  // Init resize handles
-  setTimeout(() => initResizeHandles(document.getElementById('divTable')), 100);
 }
 
 function divToggleExp(t) { divExpanded[t]=!divExpanded[t]; renderDivTable(); }
-function borrarArchivo() { divFilas=[]; document.getElementById('divTableCard').style.display='none'; document.getElementById('divUpzTxt').textContent='Arrastra tu CSV o XML de Interactive Brokers aquí, o haz clic para seleccionar'; document.getElementById('divUpz').classList.remove('ok'); }
 
-// --- Render history ---
-function divHistValFn(r,col) { if(col==='ticker')return r.ticker; if(col==='nombre')return r.nombre||''; if(col==='neto')return(r.eur||0)+(r.usd||0); if(col==='cobros')return r.cobros||0; if(col==='ultima')return r.ultimaTs||0; return 0; }
+// --- Render Table 2 (Historial) ---
+function divHistValFn(r,col) { if(col==='ticker')return r.ticker; if(col==='nombre')return r.nombre||''; if(col==='netoEur')return r.netoEur; if(col==='cobros')return r.cobros||0; if(col==='ultima')return r.ultimaTs||0; return 0; }
 function divHistClickSort(col) { divHistOrd.dir=(divHistOrd.col===col&&divHistOrd.dir==='asc')?'desc':'asc'; divHistOrd.col=col; renderDivHist(); }
 
-function setHistView(v) {
-  currentHistView = v;
-  document.getElementById('btnHistAction').classList.toggle('active', v==='action');
-  document.getElementById('btnHistMonth').classList.toggle('active', v==='month');
-  document.getElementById('histViewAction').style.display = v==='action' ? 'block' : 'none';
-  document.getElementById('histViewMonth').style.display = v==='month' ? 'block' : 'none';
-  if(v==='month') renderHistMonth();
-}
-
 function renderDivHist() {
-  const mapa = {};
-  companies.forEach(c => { const k=c.yahooTicker.toUpperCase(); mapa[k]={ticker:c.yahooTicker,nombre:c.name,eur:0,usd:0,cobros:0,ultima:'',ultimaTs:0}; });
-  divHistorial.forEach(r => {
-    const k=r.ticker.toUpperCase(); let key=null;
-    if(mapa[k]) key=k;
-    else { const bk=base(r.ticker); key=Object.keys(mapa).find(mk=>base(mk)===bk); }
-    if(!key) { mapa[k]={ticker:r.ticker,nombre:null,eur:0,usd:0,cobros:0,ultima:'',ultimaTs:0}; key=k; }
-    if(r.sym==='€') mapa[key].eur+=r.neto; else mapa[key].usd+=r.neto;
-    mapa[key].cobros++;
-    if(r.fecha) { const parts=r.fecha.split('/'); if(parts.length===3) { const ts=new Date(parts[2],parts[1]-1,parts[0]).getTime(); if(ts>mapa[key].ultimaTs) { mapa[key].ultimaTs=ts; mapa[key].ultima=r.fecha; } } }
-  });
-
-  const todos = Object.values(mapa);
-  if(!todos.length) { document.getElementById('divHistLabel').style.display='none'; document.getElementById('divHistCard').style.display='none'; return; }
+  if(!divDataAll.length) {
+    document.getElementById('divHistLabel').style.display='none'; 
+    document.getElementById('divHistCard').style.display='none'; 
+    return; 
+  }
+  
   document.getElementById('divHistLabel').style.display='flex';
   document.getElementById('divHistCard').style.display='block';
 
-  const pagan=todos.filter(r=>r.eur>0||r.usd>0);
-  const sp=divSort(pagan,divHistOrd.col,divHistOrd.dir,divHistValFn);
+  if (currentHistView === 'action') {
+    // AGRUPADO POR ACCIÓN
+    const mapa = {};
+    companies.forEach(c => { const k=c.yahooTicker.toUpperCase(); mapa[k]={ticker:c.yahooTicker,nombre:c.name,netoEur:0,cobros:0,ultima:'',ultimaTs:0}; });
+    
+    divDataAll.forEach(r => {
+      const k=r.ticker.toUpperCase(); let key=null;
+      if(mapa[k]) key=k;
+      else { const bk=base(r.ticker); key=Object.keys(mapa).find(mk=>base(mk)===bk); }
+      if(!key) { mapa[k]={ticker:r.ticker,nombre:null,netoEur:0,cobros:0,ultima:'',ultimaTs:0}; key=k; }
+      
+      mapa[key].netoEur += r.netoEur;
+      mapa[key].cobros++;
+      const ts = r.fechaObj.getTime();
+      if(ts > mapa[key].ultimaTs) { mapa[key].ultimaTs = ts; mapa[key].ultima = r.fechaStr; }
+    });
 
-  const cols=[{k:'ticker',l:'Ticker'},{k:'nombre',l:'Nombre'},{k:'neto',l:'Total cobrado',r:1},{k:'cobros',l:'Cobros',r:1},{k:'ultima',l:'Última fecha',r:0}];
-  document.getElementById('divHHead').innerHTML = cols.map(c => `<th class="${c.r?'R':'L'}" onclick="divHistClickSort('${c.k}')" style="cursor:pointer">${c.l}${divSortIco(divHistOrd,c.k)}</th>`).join('');
+    // Ocultamos las que no pagan dividendo
+    const pagan = Object.values(mapa).filter(r => r.netoEur > 0);
+    const sp = divSort(pagan, divHistOrd.col, divHistOrd.dir, divHistValFn);
 
-  function fila(r) {
-    const nm=r.nombre?`<span style="max-width:220px;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${r.nombre}</span>`:'<span style="color:var(--muted)">—</span>';
-    return `<tr><td class="L" style="font-weight:600;white-space:nowrap">${r.ticker}</td><td class="L" style="font-size:12px;color:var(--muted)">${nm}</td><td class="R div-mono" style="white-space:nowrap">${divNetStr(r.eur,r.usd)}</td><td class="R div-mono" style="color:var(--muted)">${r.cobros}</td><td class="L div-mono" style="color:var(--muted);white-space:nowrap">${r.ultima||'—'}</td></tr>`;
-  }
-  // Total row
-  let hTotEUR=0, hTotUSD=0, hTotCobros=0;
-  sp.forEach(r => { hTotEUR+=r.eur; hTotUSD+=r.usd; hTotCobros+=r.cobros; });
-  const totalRow = `<tr class="div-total"><td colspan="2" class="L" style="font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)">Total</td><td class="R div-mono">${divUnifiedTotalStr(hTotEUR,hTotUSD)}</td><td class="R div-mono" style="color:var(--muted)">${hTotCobros}</td><td></td></tr>`;
-  document.getElementById('divHBody').innerHTML = sp.map(r=>fila(r)).join('') + totalRow;
+    const cols=[{k:'ticker',l:'Ticker'},{k:'nombre',l:'Nombre'},{k:'netoEur',l:'Total (EUR)',r:1},{k:'cobros',l:'Cobros',r:1},{k:'ultima',l:'Última fecha',r:0}];
+    document.getElementById('divHHead').innerHTML = cols.map(c => `<th class="${c.r?'R':'L'}" onclick="divHistClickSort('${c.k}')">${c.l}${divSortIco(divHistOrd,c.k)}</th>`).join('');
 
-  if (currentHistView === 'month') renderHistMonth();
-  setTimeout(() => initResizeHandles(document.getElementById('divHTable')), 100);
-}
-
-function divToggleHistMonth(k) { histMonthExpanded[k] = !histMonthExpanded[k]; renderHistMonth(); }
-
-function renderHistMonth() {
-  const months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-  const groups = {};
-
-  divHistorial.forEach(r => {
-    const d = divToDate(r.fecha);
-    const k = `${d.getFullYear()}-${String(d.getMonth()).padStart(2,'0')}`;
-    if(!groups[k]) groups[k] = { label: `${months[d.getMonth()]} ${d.getFullYear()}`, eur:0, usd:0, items:[] };
-    if(r.sym === '€') groups[k].eur += r.neto; else groups[k].usd += r.neto;
-    groups[k].items.push(r);
-  });
-
-  const keys = Object.keys(groups).sort((a,b) => b.localeCompare(a));
-  let html = '';
-  keys.forEach(k => {
-    const g = groups[k];
-    const exp = histMonthExpanded[k];
-    g.items.sort((a,b) => divToDate(b.fecha).getTime() - divToDate(a.fecha).getTime());
-
-    html += `<tr style="cursor:pointer;background:${exp?'var(--surface2)':'transparent'}" onclick="divToggleHistMonth('${k}')">
-      <td class="L" style="font-weight:600;">${g.label} <span class="div-multi">${g.items.length}</span></td>
-      <td class="R div-mono">${divUnifiedTotalStr(g.eur, g.usd)}</td>
-    </tr>`;
-
-    if(exp) {
-      g.items.forEach(x => {
-        html += `<tr class="div-sub">
-          <td class="L" style="padding-left:24px;">
-            <div style="font-weight:600; color:var(--text);">${x.ticker}</div>
-            <div class="div-mono" style="color:var(--muted);">${x.fecha}</div>
-          </td>
-          <td class="R div-mono" style="color:var(--green)">${x.sym}${x.neto.toFixed(2)}</td>
-        </tr>`;
-      });
-    }
-  });
+    let hTotEUR = 0, hTotCobros = 0;
+    const hBody = sp.map(r => {
+      hTotEUR += r.netoEur; hTotCobros += r.cobros;
+      const nm = r.nombre?`<span style="max-width:220px;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${r.nombre}</span>`:'<span style="color:var(--muted)">—</span>';
+      return `<tr><td class="L" style="font-weight:600;white-space:nowrap">${r.ticker}</td><td class="L" style="font-size:12px;color:var(--muted)">${nm}</td><td class="R div-mono" style="font-weight:600;">€${r.netoEur.toFixed(2)}</td><td class="R div-mono" style="color:var(--muted)">${r.cobros}</td><td class="L div-mono" style="color:var(--muted);white-space:nowrap">${r.ultima||'—'}</td></tr>`;
+    }).join('');
+    
+    document.getElementById('divHBody').innerHTML = hBody + `<tr class="div-total"><td colspan="2" class="L" style="font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)">Total Unificado</td><td class="R div-mono" style="font-size:14px; color:var(--green)">€${hTotEUR.toFixed(2)}</td><td class="R div-mono" style="color:var(--muted)">${hTotCobros}</td><td></td></tr>`;
   
-  if (!keys.length) {
-    html = `<tr><td colspan="2" style="text-align:center;padding:24px;color:var(--muted)">No hay historial de dividendos.</td></tr>`;
-  }
-  document.getElementById('divHMonthBody').innerHTML = html;
-}
+  } else {
+    // AGRUPADO POR MESES (Tabla compacta)
+    const months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+    const groups = {};
 
-// --- Upload IB file ---
+    divDataAll.forEach(r => {
+      const k = `${r.fechaObj.getFullYear()}-${String(r.fechaObj.getMonth()).padStart(2,'0')}`;
+      if(!groups[k]) groups[k] = { label: `${months[r.fechaObj.getMonth()]} ${r.fechaObj.getFullYear()}`, netoEur:0, items:[] };
+      groups[k].netoEur += r.netoEur;
+      groups[k].items.push(r);
+    });
+
+    const keys = Object.keys(groups).sort((a,b) => b.localeCompare(a));
+    let html = '';
+    let mTotEUR = 0;
+    
+    keys.forEach(k => {
+      const g = groups[k];
+      const exp = monthExpanded[k];
+      mTotEUR += g.netoEur;
+      g.items.sort((a,b) => b.fechaObj.getTime() - a.fechaObj.getTime());
+
+      html += `<tr style="cursor:pointer;background:${exp?'var(--surface2)':'transparent'}" onclick="divToggleMonth('${k}')">
+        <td class="L" style="font-weight:600; padding-right: 40px; white-space:nowrap;">${g.label} <span class="div-multi">${g.items.length}</span></td>
+        <td class="R div-mono" style="font-weight:700;">€${g.netoEur.toFixed(2)}</td>
+      </tr>`;
+
+      if(exp) {
+        g.items.forEach(x => {
+          html += `<tr class="div-sub">
+            <td class="L" style="padding-left:16px;">
+              <span style="font-weight:600; color:var(--text); margin-right:8px;">${x.ticker}</span>
+              <span class="div-mono" style="color:var(--muted);">${x.fechaStr}</span>
+            </td>
+            <td class="R div-mono" style="color:var(--green)">€${x.netoEur.toFixed(2)}</td>
+          </tr>`;
+        });
+      }
+    });
+    
+    html += `<tr class="div-total"><td class="L" style="font-size:10px;text-transform:uppercase;color:var(--muted)">Total Unificado</td><td class="R div-mono" style="font-size:14px; color:var(--green)">€${mTotEUR.toFixed(2)}</td></tr>`;
+    document.getElementById('divMonthBody').innerHTML = html;
+  }
+}
+function divToggleMonth(k) { monthExpanded[k] = !monthExpanded[k]; renderDivHist(); }
+
+// --- Upload Process ---
 const divUpz = document.getElementById('divUpz');
 divUpz.addEventListener('click', () => document.getElementById('divFile').click());
 divUpz.addEventListener('dragover', e => { e.preventDefault(); divUpz.classList.add('drag'); });
@@ -945,56 +963,49 @@ function divLoadFile(file) {
     const txt = e.target.result, err = document.getElementById('divError');
     try {
       const isXML = file.name.toLowerCase().endsWith('.xml') || txt.trimStart().startsWith('<');
-      divFilas = isXML ? divParseXML(txt) : divParseCSV(txt);
-      if(!divFilas.length) throw new Error('No se encontraron transacciones');
-      document.getElementById('divUpzTxt').innerHTML = `<strong>${file.name}</strong> · <span style="color:var(--green)">${divFilas.length} transacciones leídas</span>`;
+      divFilasRaw = isXML ? divParseXML(txt) : divParseCSV(txt);
+      if(!divFilasRaw.length) throw new Error('No se encontraron transacciones en el archivo.');
+      
+      document.getElementById('divUpzTxt').innerHTML = `<strong>${file.name}</strong> · <span style="color:var(--green)">${divFilasRaw.length} transacciones procesadas</span>`;
       divUpz.classList.add('ok'); err.style.display = 'none';
       
-      // Update upload date in LS (do not update prevUploadTs so 'Última actualización' filter works this session)
-      localStorage.setItem('div_last_upload_v2', Date.now().toString());
+      // Proceso de datos maestro (Garantiza que ambas tablas miren los mismos datos)
+      divDataAll = divBuild(divFilasRaw);
       
-      // Populate month filter dropdown before rendering
-      populateMonthSelect(divBuild());
+      // Rellenar meses para el filtro
+      const months = new Set();
+      divDataAll.forEach(d => { if(d.fechaObj.getTime()>0) months.add(`${d.fechaObj.getFullYear()}-${String(d.fechaObj.getMonth()+1).padStart(2,'0')}`); });
+      const sortedMonths = Array.from(months).sort((a,b) => b.localeCompare(a));
+      const mNames = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+      const sel = document.getElementById('divMonthSelect');
+      sel.innerHTML = '<option value="">Seleccionar Mes...</option>' + sortedMonths.map(m => { const [y,mm]=m.split('-'); return `<option value="${m}">${mNames[parseInt(mm)-1]} ${y}</option>`; }).join('');
+      sel.style.display = sortedMonths.length > 0 ? 'inline-block' : 'none';
+      
+      // Renderizar ambas tablas
       renderDivTable();
+      renderDivHist();
+      
+      // Finalmente, actualizamos la fecha de subida para el FUTURO
+      const currentUploadTimestamp = Date.now();
+      localStorage.setItem('div_last_upload_v2', currentUploadTimestamp.toString());
+      
+      const dt = new Date(currentUploadTimestamp);
+      document.getElementById('divLastUploadDate').textContent = `${String(dt.getDate()).padStart(2,'0')}/${String(dt.getMonth()+1).padStart(2,'0')}/${dt.getFullYear()}`;
+      
     } catch(ex) { err.textContent = 'Error: ' + ex.message; err.style.display = 'block'; }
   };
   reader.readAsText(file);
 }
 
-// --- Resizable columns ---
-function initResizeHandles(table) {
-  if(!table) return;
-  table.querySelectorAll('.resize-handle').forEach(h => h.remove());
-  // Restore saved widths
-  try {
-    const saved = JSON.parse(localStorage.getItem('div_colw_'+table.id));
-    if(saved) { const ths=table.querySelectorAll('th'); ths.forEach((th,i) => { if(saved[i]) { th.style.width=saved[i]; th.style.minWidth=saved[i]; } }); }
-  } catch(e) {}
-  table.querySelectorAll('th').forEach(th => {
-    th.style.position = 'relative';
-    const handle = document.createElement('div');
-    handle.className = 'resize-handle';
-    th.appendChild(handle);
-    let startX, startW;
-    handle.addEventListener('mousedown', function(e) {
-      startX = e.pageX; startW = th.offsetWidth;
-      handle.classList.add('active');
-      function onMove(ev) { const w = Math.max(40, startW + ev.pageX - startX); th.style.width = w+'px'; th.style.minWidth = w+'px'; }
-      function onUp() {
-        handle.classList.remove('active');
-        document.removeEventListener('mousemove', onMove);
-        document.removeEventListener('mouseup', onUp);
-        // Save widths
-        const ths = table.querySelectorAll('th');
-        const widths = Array.from(ths).map(t => t.style.width || '');
-        try { localStorage.setItem('div_colw_'+table.id, JSON.stringify(widths)); } catch(e) {}
-      }
-      document.addEventListener('mousemove', onMove);
-      document.addEventListener('mouseup', onUp);
-      e.preventDefault(); e.stopPropagation();
-    });
-  });
+function borrarArchivo() { 
+  divFilasRaw = []; divDataAll = []; 
+  document.getElementById('divTableCard').style.display='none'; 
+  document.getElementById('divHistCard').style.display='none'; 
+  document.getElementById('divHistLabel').style.display='none'; 
+  document.getElementById('divUpzTxt').textContent='Arrastra tu CSV o XML de Interactive Brokers aquí, o haz clic para seleccionar'; 
+  document.getElementById('divUpz').classList.remove('ok'); 
 }
+
 </script>
 </body>
 </html>
